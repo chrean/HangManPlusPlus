@@ -7,6 +7,12 @@ void printHintSoFar( std::vector<char> guessed_letters ) {
 	std::cout << str << std::endl;
 }
 
+bool compareVectorToString( std::vector<char> vec, std::string str ) {
+	std::string converted_vector( vec.begin(), vec.end() );
+
+	return ( str == converted_vector );
+}
+
 int main() {
 	std::string hint;
 	int errors = 0;
@@ -34,6 +40,10 @@ int main() {
 			// TODO: adds one to hangman
 			errors++;
 			std::cout << guessed_char << " was not found, you have " << ( MAX_ERRORS - errors ) << " errors left!" << std::endl;
+		}
+		if ( compareVectorToString( guessed, hint ) ) {
+			std::cout << "You got it right!" << std::endl;
+			exit( 1 );
 		}
 		printHintSoFar( guessed );
 	}
