@@ -68,18 +68,18 @@ int main() {
 		std::cout << "Guess a character" << std::endl;
 		std::cin >> guessed_char;
 
+		// Basic validation
 		if ( ! isalpha( guessed_char ) ) {
 			std::cout << "Please enter a letter" << std::endl;
 		}
 		guessed_char = tolower( guessed_char );
 
+		// Has the character alreasy been searched ror?
 		if ( findInVector( previous_attempts, guessed_char ) ) {
 			continue;
 		}
 		previous_attempts.push_back( guessed_char );
-		// TODO: some validation on the char!
 
-		// TODO: check if the character has already been searched for (add a vector of characters that have been already typed in)
 		matches = findAllOccurrencesOfCharInString( hint, guessed_char );
 		if ( ! matches.empty() ) {
 			std::cout << "Character " << guessed_char << " found!" << std::endl;
@@ -93,7 +93,7 @@ int main() {
 			std::cout << guessed_char << " was not found, you have " << ( MAX_ERRORS - errors ) << " errors left!" << std::endl;
 		}
 		if ( compareVectorToString( guessed, hint ) ) {
-			std::cout << "You got it right!" << std::endl;
+			std::cout << "You got it right! 🎉" << std::endl;
 			exit( 1 );
 		}
 	}
