@@ -90,8 +90,13 @@ int main() {
 		} else {
 			// TODO: adds one to hangman, draw something!
 			errors++;
+			if ( errors >= MAX_ERRORS ) {
+				std::cout << "Too many errors! You have been hanged! 💀 💀 💀" << std::endl;
+				exit( 1 );
+			}
 			std::cout << guessed_char << " was not found, you have " << ( MAX_ERRORS - errors ) << " errors left!" << std::endl;
 		}
+		
 		if ( compareVectorToString( guessed, hint ) ) {
 			std::cout << "You got it right! 🎉" << std::endl;
 			exit( 1 );
