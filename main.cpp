@@ -13,6 +13,24 @@ bool compareVectorToString( std::vector<char> vec, std::string str ) {
 	return ( str == converted_vector );
 }
 
+std::vector<size_t> findAllOccurrencesOfCharInString( std::string data, char toSearch )
+{
+	std::vector<size_t> vec;
+	// Get the first occurrence
+	size_t pos = data.find( toSearch );
+ 
+	// Repeat till end is reached
+	while( pos != std::string::npos )
+	{
+		// Add position to the vector
+		vec.push_back( pos );
+ 
+		// Get the next occurrence from the current position
+		pos = data.find( toSearch, pos + 1 );
+	}
+	return vec;
+}
+
 int main() {
 	std::string hint;
 	int errors = 0;
@@ -20,7 +38,10 @@ int main() {
 
 	hint = "whatever";
 
+	// To convert string into vector:
+	//const std::vector<char> charvect(json_str.begin(), json_str.end()); 
 	std::vector<char> guessed;
+	std::vector<size_t> matches;
 
 	for ( int i; i < hint.length(); ++i ) {
 		guessed.push_back( '_' );
@@ -31,13 +52,16 @@ int main() {
 
 		std::cout << "Guess a character" << std::endl;
 		std::cin >> guessed_char;
-		std::cout << "You typed " << guessed_char << std::endl;
 
-		int pos = hint.find( guessed_char );
-		if ( pos != std::string::npos ) {
-			guessed[ pos ] = guessed_char;
+		matches = findAllOccurrencesOfCharInString( hint, guessed_char );
+		if ( ! matches.empty() ) {
+			std::cout << "Character " << guessed_char << " found!" << std::endl;
+			while ( ! matches.empty() ) {
+				guessed[ matches.back() ] = guessed_char;
+				matches.pop_back();
+			}
 		} else {
-			// TODO: adds one to hangman
+			// TODO: adds one to hangman, draw something!
 			errors++;
 			std::cout << guessed_char << " was not found, you have " << ( MAX_ERRORS - errors ) << " errors left!" << std::endl;
 		}
