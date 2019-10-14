@@ -31,6 +31,18 @@ std::vector<size_t> findAllOccurrencesOfCharInString( std::string data, char toS
 	return vec;
 }
 
+bool findInVector( std::vector<char> haystack, char needle) {
+	for ( auto & elem : haystack ) {
+		std::cout << "Elem: " << elem << ", needle: " << needle << std::endl;
+		if ( elem == needle ) {
+			std::cout << "You have already typed the character: " << needle << std::endl;
+			std::cout << "Please try with another letter!" << std::endl;
+			return true;
+		}
+	}
+	return false;
+}
+
 int main() {
 	std::string hint;
 	int errors = 0;
@@ -42,6 +54,7 @@ int main() {
 	//const std::vector<char> charvect(json_str.begin(), json_str.end()); 
 	std::vector<char> guessed;
 	std::vector<size_t> matches;
+	std::vector<char> previous_attempts;
 
 	for ( int i; i < hint.length(); ++i ) {
 		guessed.push_back( '_' );
@@ -53,6 +66,13 @@ int main() {
 		std::cout << "Guess a character" << std::endl;
 		std::cin >> guessed_char;
 
+		if ( findInVector( previous_attempts, guessed_char ) ) {
+			continue;
+		}
+		previous_attempts.push_back( guessed_char );
+		// TODO: some validation on the char!
+
+		// TODO: check if the character has already been searched for (add a vector of characters that have been already typed in)
 		matches = findAllOccurrencesOfCharInString( hint, guessed_char );
 		if ( ! matches.empty() ) {
 			std::cout << "Character " << guessed_char << " found!" << std::endl;
