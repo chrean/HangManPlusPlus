@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cctype>
 
 void printHintSoFar( std::vector<char> guessed_letters ) {
 	std::string str( guessed_letters.begin(), guessed_letters.end() );
@@ -33,7 +34,6 @@ std::vector<size_t> findAllOccurrencesOfCharInString( std::string data, char toS
 
 bool findInVector( std::vector<char> haystack, char needle) {
 	for ( auto & elem : haystack ) {
-		std::cout << "Elem: " << elem << ", needle: " << needle << std::endl;
 		if ( elem == needle ) {
 			std::cout << "You have already typed the character: " << needle << std::endl;
 			std::cout << "Please try with another letter!" << std::endl;
@@ -67,6 +67,11 @@ int main() {
 
 		std::cout << "Guess a character" << std::endl;
 		std::cin >> guessed_char;
+
+		if ( ! isalpha( guessed_char ) ) {
+			std::cout << "Please enter a letter" << std::endl;
+		}
+		guessed_char = tolower( guessed_char );
 
 		if ( findInVector( previous_attempts, guessed_char ) ) {
 			continue;
