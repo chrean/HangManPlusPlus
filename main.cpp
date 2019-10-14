@@ -56,12 +56,14 @@ int main() {
 	std::vector<size_t> matches;
 	std::vector<char> previous_attempts;
 
-	for ( int i; i < hint.length(); ++i ) {
+	for ( int i; i <= hint.length(); ++i ) {
 		guessed.push_back( '_' );
 	}
 
 	while ( errors < MAX_ERRORS ) {
 		char guessed_char = 0;
+
+		printHintSoFar( guessed );
 
 		std::cout << "Guess a character" << std::endl;
 		std::cin >> guessed_char;
@@ -89,6 +91,5 @@ int main() {
 			std::cout << "You got it right!" << std::endl;
 			exit( 1 );
 		}
-		printHintSoFar( guessed );
 	}
 }
